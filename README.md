@@ -1,24 +1,78 @@
-# README
+## Prep a github/github codespace for training use
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Create a new codespace
 
-Things you may want to cover:
+Go [here](https://github.com/github/github/codespaces) and spin up a new codespace.
 
-* Ruby version
+Install recommended extensions. Optionally, remove the ruby-rubocop extension which only seems to spam errors at you.
 
-* System dependencies
+### Only needed once: download and install a bunch of stuff from the command line
 
-* Configuration
+You only need to run these commands once after you create a brand new Codespace. You can pull new changes each day without re-running these commands.
 
-* Database creation
+Connect to the new codespace in VS Code, and open a bash console (Ctrl-`).
 
-* Database initialization
+Run these:
 
-* How to run the test suite
+``` sh
+# Ruby header files
+apt-get install -y ruby-dev
 
-* Services (job queues, cache servers, search engines, etc.)
+# Node Version Manager
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+source ~/.bashrc
+nvm --version
 
-* Deployment instructions
+# NodeJS and Node Package Manager
+nvm install --lts
+node --version
+npm --version
 
-* ...
+# Yarn
+npm install --global yarn
+yarn --version
+
+# Rails
+gem install rails -v 6.0.4.4
+
+# Fetch the whole rails app
+cd /workspaces
+git clone https://github.com/DarylCantrell/rails_training_app_for_codespace.git movie_app
+```
+
+### Needed before first run, and whenever you pull latest changes:
+
+Whenever you pull latest changes from this fork, run these in the console to rebuild things:
+
+```
+cd /workspaces/movie_app
+
+rm Gemfile.lock
+rm yarn.lock
+
+bin/bundle install
+
+yarn install --check-files
+
+bin/rails webpacker:install
+```
+
+For now, you'll get some errors about python not being installed.
+
+### Database reset or migration
+
+If this is a new codespace or the database schema changed, you'll need to catch up. Depending on your situation, you might reset it to "start over" or just run needed migrations. On a new codespace you'll have to reset it.
+
+```
+bin/rails db:reset
+```
+**OR**
+```
+bin/rails db:migrate
+```
+
+### Run some tests to make sure everything is working.
+
+```
+bin/rails test:system test:models
+```
