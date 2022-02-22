@@ -33,7 +33,7 @@ npm install --global yarn
 yarn --version
 
 # Rails
-gem install rails -v 6.0.4.4
+gem install rails -v 7.0.2
 
 # Fetch the whole rails app
 cd /workspaces
