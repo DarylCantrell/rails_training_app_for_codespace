@@ -53,8 +53,6 @@ rm yarn.lock
 bin/bundle install
 
 yarn install --check-files
-
-bin/rails webpacker:install
 ```
 
 For now, you'll get some errors about python not being installed.
