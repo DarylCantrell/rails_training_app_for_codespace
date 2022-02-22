@@ -27,6 +27,8 @@ ActiveRecord::Schema[6.1].define(version: 2022_02_11_165824) do
     t.integer "color_format", default: 0, null: false
     t.integer "director_id"
     t.index ["director_id"], name: "index_movies_on_director_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   add_foreign_key "movies", "directors"
